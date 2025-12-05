@@ -1,6 +1,6 @@
 {
     "name": "athulr/laravel-qr",
-    "description": "Simple QR code generator using BaconQrCode",
+    "description": "QR code generator for Laravel",
     "type": "library",
     "version": "1.0.0",
     "autoload": {
