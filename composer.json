@@ -1,0 +1,24 @@
+{
+    "name": "athulr/laravel-qr",
+    "description": "Simple QR code generator using BaconQrCode",
+    "type": "library",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Athulr\\LaravelQr\\": "src/"
+        }
+    },
+    "require": {
+        "bacon/bacon-qr-code": "^2.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Athulr\\LaravelQr\\QrCodeServiceProvider"
+            ],
+            "aliases": {
+                "QrCode": "Athulr\\LaravelQr\\Facades\\QrCode"
+            }
+        }
+    }
+}
