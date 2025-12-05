@@ -48,7 +48,8 @@ QrCode::size(500)
 
 -   **`size(int $pixels)`**: Set the size of the QR code in pixels (default: 200).
 -   **`margin(int $margin)`**: Set the white space margin around the QR code (default: 0).
--   **`format(string $format)`**: Set the output format to `'svg'` (default) or `'png'`.
+-   **`format(string $format)`**: Set the output format to `'svg'` (default), `'png'`, `'jpg'`, or `'webp'`.
+-   **`response(string $text)`**: Generates the QR code and returns a Laravel `Response` object with the correct `Content-Type` header.
 -   **`color($r, $g = null, $b = null)`**: Set the foreground color. Accepts a hex string (e.g., `'#FF0000'`) or RGB integers.
 -   **`backgroundColor($r, $g = null, $b = null)`**: Set the background color. Accepts a hex string or RGB integers.
 -   **`errorCorrection(string $level)`**: Set the error correction level: `'L'` (Low), `'M'` (Medium), `'Q'` (Quartile), `'H'` (High).
@@ -96,7 +97,7 @@ QrCode::format('png')
 ```
 
 -   **`logo(string $path, int $percentage = 20)`**: Embeds an image at the given path. The `percentage` argument determines how much of the QR code width the logo should occupy.
--   *Note: Using `logo` automatically sets the error correction level to `'H'` (High).*
+-   *Note: Using `logo` requires a raster format (`png`, `jpg`, `webp`) and the `imagick` extension. It automatically sets error correction to `'H'`.*
 
 ## Saving to File
 
@@ -113,6 +114,29 @@ Get the QR code as a Base64 data URI (useful for embedding in `<img>` tags):
 ```php
 $dataUri = QrCode::base64('Hello World');
 // Output: data:image/svg+xml;base64,...
+```
+
+## HTTP Response
+
+You can return the QR code directly as an HTTP response with the correct `Content-Type` header. This is useful for displaying the image directly in a browser or `<img>` tag source.
+
+```php
+Route::get('/qr-code', function () {
+    return QrCode::size(500)
+        ->format('webp')
+        ->response('Hello World');
+});
+```
+
+## Image Quality & Sharpness
+
+For raster formats (`png`, `jpg`, `webp`), the package uses improved rendering with **anti-aliasing** and **supersampling** to ensure smooth edges on circular eyes and dot modules.
+
+**Important:** To ensure sharpness, always generate the QR code at the size you intend to display it. For example, if you want to display a 1000px image, call `size(1000)`. Upscaling a small generated image (e.g., 200px displayed at 1000px) will result in blurriness.
+
+```php
+// Good: Generates a high-res, smooth image
+QrCode::size(1000)->format('png')->generate('...');
 ```
 
 ## License
