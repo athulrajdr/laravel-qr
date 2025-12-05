@@ -3,6 +3,7 @@
     "description": "QR code generator for Laravel",
     "type": "library",
     "version": "1.0.0",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Athulr\\LaravelQr\\": "src/"

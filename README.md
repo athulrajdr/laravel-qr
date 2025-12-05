@@ -141,4 +141,4 @@ QrCode::size(1000)->format('png')->generate('...');
 
 ## License
 
-The MIT License (MIT).
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
